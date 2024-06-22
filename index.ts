@@ -48,7 +48,6 @@ io.use(async (socket, next) => {
 io.on("connection", (socket) => {
   console.log(`${socket.id} connected`);
     socket.on('draw', (...args) => {
-      console.log(socket.data.room)
       socket.broadcast.to(socket.data.room).emit('draw', ...args);
     });
     socket.on("join", async (room: string) => {
@@ -78,6 +77,8 @@ io.on("connection", (socket) => {
     socket.on('disconnect', async () => {
       console.log(`${socket.id} disconnected`);
       let users = (await io.in(socket.data.room).fetchSockets()).map(socket => socket.data.user);
+      console.log(socket.data.user, socket.data.admin);
+      if (socket.data.admin) socket.broadcast.to(socket.data.room).emit("admin-disconnected");
       socket.broadcast.to(socket.data.room).emit("update-users", users);
     });
 });

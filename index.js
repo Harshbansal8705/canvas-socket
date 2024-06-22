@@ -105,7 +105,6 @@ io.on("connection", function (socket) {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        console.log(socket.data.room);
         (_a = socket.broadcast.to(socket.data.room)).emit.apply(_a, __spreadArray(['draw'], args, false));
     });
     socket.on("join", function (room) { return __awaiter(_this, void 0, void 0, function () {
@@ -152,6 +151,9 @@ io.on("connection", function (socket) {
                     return [4 /*yield*/, io.in(socket.data.room).fetchSockets()];
                 case 1:
                     users = (_a.sent()).map(function (socket) { return socket.data.user; });
+                    console.log(socket.data.user, socket.data.admin);
+                    if (socket.data.admin)
+                        socket.broadcast.to(socket.data.room).emit("admin-disconnected");
                     socket.broadcast.to(socket.data.room).emit("update-users", users);
                     return [2 /*return*/];
             }
