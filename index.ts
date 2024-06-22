@@ -1,9 +1,9 @@
-import express from "express";
-import { Server } from "socket.io";
-import { createServer } from "http";
-import { jwtVerify } from "jose";
-import cors from "cors";
-import dotenv from "dotenv";
+const express = require("express");
+const { Server } = require("socket.io");
+const { createServer } = require("http");
+const { jwtVerify } = require("jose");
+const cors = require("cors");
+const dotenv = require("dotenv");
 dotenv.config();
 
 const PORT = 5000;
