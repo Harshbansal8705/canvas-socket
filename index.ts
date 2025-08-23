@@ -66,6 +66,12 @@ io.on("connection", (socket) => {
       if (!socket.data.admin) return;
       socket.broadcast.to(socket.data.room).emit("canvas-data", data);
     });
+    socket.on("cursor-move", (data) => {
+      socket.broadcast.to(socket.data.room).emit("cursor-move", data);
+    });
+    socket.on("cursor-leave", (data) => {
+      socket.broadcast.to(socket.data.room).emit("cursor-leave", data);
+    });
     socket.on("create", () => {
       socket.data.admin = true;
       const room = "id_" + (new Date()).getTime();
